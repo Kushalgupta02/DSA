@@ -1,23 +1,12 @@
 class Solution {
     public int minAddToMakeValid(String s) {
-        int open=0;
-        int close=0;
-        if(s.length()==0)return 0;
-        for(int i=0; i<s.length(); i++){
-            char ch=s.charAt(i);
-            if(ch=='('){
-                open++;
-            }
-            else{
-                if(open<=0)
-                    close++;
-                else{
-                    open--;
-                }
-            }
+        int size = 0;
+        int open = 0;
+        for(char ch : s.toCharArray()){
+            if(ch=='(') size++;
+            else if(size > 0) size--;
+            else open++;
         }
-        int ans=Math.abs(open+close);
-        //if(ans==0) return 0;
-        return ans;
+        return open + size;
     }
 }

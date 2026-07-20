@@ -1,33 +1,28 @@
 class Solution {
     public String removeDuplicateLetters(String s) {
-        int n=s.length();
-        int last[]=new int[26];
-        for(int i=0; i<n; i++){
-            char ch=s.charAt(i);
-            last[ch-'a']=i;
+        int n = s.length();
+        int[] last = new int[26];
+        for (int i = 0; i < n; i++) {
+            last[s.charAt(i) - 'a'] = i;
         }
-        Stack<Integer> st=new Stack<>();
-        HashSet<Character> hset=new HashSet<>();
-        for(int i=0; i<n; i++){
-            char ch=s.charAt(i);
-            if(hset.contains(ch)){
+        StringBuilder sb = new StringBuilder();
+        boolean[] visited = new boolean[26];
+        for (int i = 0; i < n; i++) {
+            char ch = s.charAt(i);
+            if (visited[ch - 'a'])
                 continue;
+            while (sb.length() > 0) {
+                char prev = sb.charAt(sb.length() - 1);
+                if (prev > ch && last[prev - 'a'] > i) {
+                    sb.deleteCharAt(sb.length() - 1);
+                    visited[prev - 'a'] = false;
+                } else {
+                    break;
+                }
             }
-            while(!st.isEmpty()){
-                char prev=s.charAt(st.peek());
-                if(prev>ch && last[prev-'a']>i){
-                    st.pop();
-                    hset.remove(prev);
-                }else break;
-            }
-            st.push(i);
-            hset.add(ch);
+            sb.append(ch);
+            visited[ch - 'a'] = true;
         }
-        StringBuilder sb=new StringBuilder();
-        while(!st.isEmpty()){
-            sb.append(s.charAt(st.pop()));
-        }
-        sb.reverse();
         return sb.toString();
     }
 }

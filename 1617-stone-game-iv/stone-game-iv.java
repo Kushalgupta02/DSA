@@ -4,11 +4,11 @@ class Solution {
 
         for (int i = 1; i <= n; ++i)
           for (int j = 1; j * j <= i; ++j)
-            if (!dp[i - j * j]) { // Removing j^2 stones make the opponent lose.
-              dp[i] = true;       // So, we win.
+            if (!dp[i - j * j]) { 
+              dp[i] = true;       
               break;
             }
-    
+
         return dp[n];
     }
 }
